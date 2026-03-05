@@ -7,11 +7,15 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/tvMoves"
-        android:text="Movimientos: 0"
-        android:textSize="18sp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="Memory Match"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:background="#6200EE"
+        android:textColor="@android:color/white"
+        android:elevation="4dp"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvBoard"
@@ -19,6 +23,20 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:layout_marginTop="16dp"/>
+    <TextView
+        android:id="@+id/tvMoves"
+        android:text="Movimientos: 0"
+        android:textSize="18sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <ProgressBar
+        android:id="@+id/progressMoves"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:max="20"
+        android:progress="0"
+        android:layout_marginTop="8dp"/>
 
     <Button
         android:id="@+id/btnRestart"

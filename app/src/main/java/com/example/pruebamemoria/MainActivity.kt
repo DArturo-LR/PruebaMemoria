@@ -3,6 +3,7 @@ package com.example.pruebamemoria
 import android.os.Bundle
 import androidx.lifecycle.ViewModel
 import android.widget.Button
+import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.ComponentActivity
@@ -30,10 +31,16 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+
         viewModel = ViewModelProvider(this)[GameViewModel::class.java]
 
         adapter = CardAdapter(emptyList()) {
             viewModel.flipCard(it)
+        }
+        val progressBar = findViewById<ProgressBar>(R.id.progressMoves)
+        viewModel.moves.observe(this) { moveCount ->
+            findViewById<TextView>(R.id.tvMoves).text = "Movimientos: $moveCount"
+            progressBar.progress = moveCount
         }
 
         val recyclerView = findViewById<RecyclerView>(R.id.rvBoard)
@@ -44,12 +51,11 @@ class MainActivity : AppCompatActivity() {
             adapter.updateCards(it)
         }
 
-        viewModel.moves.observe(this) {
-            findViewById<TextView>(R.id.tvMoves).text = "Movimientos: $it"
-        }
+
 
         findViewById<Button>(R.id.btnRestart).setOnClickListener {
             viewModel.startGame()
+            progressBar.progress = 0
         }
         viewModel.winEvent.observe(this) { hasWon ->
             if (hasWon) {
