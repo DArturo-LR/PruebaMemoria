@@ -14,7 +14,6 @@ class GameViewModel : ViewModel() {
 
     private val _moves = MutableLiveData<Int>()
     val moves: LiveData<Int> = _moves
-
     private var firstSelectedCardIndex: Int? = null
     private var lockBoard = false
 
@@ -33,7 +32,6 @@ class GameViewModel : ViewModel() {
             R.drawable.img_7,
             R.drawable.img_8
         )
-
         val shuffledCards = (imageResources + imageResources)
             .shuffled()
             .map { Card(imageResId = it) }
