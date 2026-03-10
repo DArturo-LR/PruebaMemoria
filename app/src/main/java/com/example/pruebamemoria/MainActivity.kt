@@ -1,26 +1,14 @@
 package com.example.pruebamemoria
 
 import android.os.Bundle
-import androidx.lifecycle.ViewModel
 import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.pruebamemoria.ui.theme.PruebaMemoriaTheme
 
 class MainActivity : AppCompatActivity() {
 
@@ -31,37 +19,51 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
         viewModel = ViewModelProvider(this)[GameViewModel::class.java]
 
-        adapter = CardAdapter(emptyList()) {
-            viewModel.flipCard(it)
-        }
+        adapter = CardAdapter(emptyList()) { viewModel.flipCard(it) }
+
         val progressBar = findViewById<ProgressBar>(R.id.progressMoves)
+        val tvMoves = findViewById<TextView>(R.id.tvMoves)
+        val tvTimer = findViewById<TextView>(R.id.tvTimer)
+
+        // Observe moves
         viewModel.moves.observe(this) { moveCount ->
-            findViewById<TextView>(R.id.tvMoves).text = "Movimientos: $moveCount"
+            tvMoves.text = moveCount.toString()
             progressBar.progress = moveCount
         }
 
+        // Observe timer
+        viewModel.elapsedSeconds.observe(this) { seconds ->
+            tvTimer.text = GameViewModel.formatTime(seconds)
+        }
+
+        // Setup RecyclerView
         val recyclerView = findViewById<RecyclerView>(R.id.rvBoard)
         recyclerView.layoutManager = GridLayoutManager(this, 4)
         recyclerView.adapter = adapter
 
-        viewModel.cards.observe(this) {
-            adapter.updateCards(it)
-        }
+        viewModel.cards.observe(this) { adapter.updateCards(it) }
 
-
-
+        // Restart button
         findViewById<Button>(R.id.btnRestart).setOnClickListener {
             viewModel.startGame()
             progressBar.progress = 0
         }
+
+        // Menu button - go back
+        findViewById<Button>(R.id.btnMenu).setOnClickListener {
+            finish()
+        }
+
+        // Win event
         viewModel.winEvent.observe(this) { hasWon ->
             if (hasWon) {
+                val time = GameViewModel.formatTime(viewModel.elapsedSeconds.value ?: 0)
+                val moves = viewModel.moves.value ?: 0
                 Toast.makeText(
                     this,
-                    "¡Ganaste!",
+                    "🎉 ¡Ganaste! Tiempo: $time | Movimientos: $moves",
                     Toast.LENGTH_LONG
                 ).show()
             }

@@ -2,47 +2,134 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:padding="16dp"
-    android:background="@android:color/black"
+    android:padding="12dp"
+    android:background="#121212"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!-- Header -->
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="56dp"
         android:text="Memory Match"
-        android:textSize="24sp"
+        android:textSize="22sp"
         android:textStyle="bold"
         android:gravity="center"
         android:background="#6200EE"
         android:textColor="@android:color/white"
         android:elevation="4dp"/>
 
+    <!-- Stats Row: Tiempo | Movimientos -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="4dp">
+
+        <!-- Timer card -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:background="#1E1E2E"
+            android:padding="10dp"
+            android:layout_marginEnd="6dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="⏱ Tiempo"
+                android:textSize="11sp"
+                android:textColor="#AAAAAA"/>
+
+            <TextView
+                android:id="@+id/tvTimer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="00:00"
+                android:textSize="26sp"
+                android:textStyle="bold"
+                android:textColor="#BB86FC"
+                android:fontFamily="monospace"/>
+        </LinearLayout>
+
+        <!-- Moves card -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:background="#1E1E2E"
+            android:padding="10dp"
+            android:layout_marginStart="6dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="🔄 Movimientos"
+                android:textSize="11sp"
+                android:textColor="#AAAAAA"/>
+
+            <TextView
+                android:id="@+id/tvMoves"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textSize="26sp"
+                android:textStyle="bold"
+                android:textColor="#03DAC6"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Progress Bar -->
+    <ProgressBar
+        android:id="@+id/progressMoves"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="8dp"
+        android:max="20"
+        android:progress="0"
+        android:progressTint="#6200EE"
+        android:layout_marginBottom="8dp"/>
+
+    <!-- Game Board -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvBoard"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:layout_marginTop="16dp"/>
-    <TextView
-        android:id="@+id/tvMoves"
-        android:text="Movimientos: 0"
-        android:textSize="18sp"
-        android:textColor="@android:color/white"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-    <ProgressBar
-        android:id="@+id/progressMoves"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:max="20"
-        android:progress="0"
-        android:layout_marginTop="8dp"/>
+        android:layout_marginBottom="10dp"/>
 
-    <Button
-        android:id="@+id/btnRestart"
-        android:text="Reiniciar"
+    <!-- Buttons Row -->
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnMenu"
+            android:text="← Menú"
+            android:textSize="14sp"
+            android:backgroundTint="#333344"
+            android:textColor="#FFFFFF"
+            android:layout_width="0dp"
+            android:layout_height="52dp"
+            android:layout_weight="1"
+            android:layout_marginEnd="8dp"/>
+
+        <Button
+            android:id="@+id/btnRestart"
+            android:text="🔄 Reiniciar"
+            android:textSize="14sp"
+            android:backgroundTint="#6200EE"
+            android:textColor="#FFFFFF"
+            android:layout_width="0dp"
+            android:layout_height="52dp"
+            android:layout_weight="2"/>
+    </LinearLayout>
+
 </LinearLayout>
