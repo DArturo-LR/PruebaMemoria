@@ -21,6 +21,7 @@ class CardAdapter(
         return CardViewHolder(view)
     }
 
+
     override fun onBindViewHolder(holder: CardViewHolder, position: Int) {
         val card = cards[position]
 
@@ -33,8 +34,13 @@ class CardAdapter(
             holder.ivCard.setPadding(padding, padding, padding, padding)
         }
 
+        holder.ivCard.alpha = if (card.isMatched) 0.5f else 1.0f
+        // ===========================
+
         holder.itemView.setOnClickListener {
-            onCardClick(position)
+            if (!card.isMatched) {
+                onCardClick(position)
+            }
         }
     }
 
